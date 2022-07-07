@@ -1,44 +1,25 @@
-import React, {useState, useCallback} from 'react';
+import * as React from 'react';
+import {View, Text, Pressable, StyleSheet} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import ScreenA from './src/Screen/ScreenA';
+import HomeScreen from './src/Screen/HomeScreen';
 
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  RefreshControl,
-  Text,
-  useColorScheme,
-  View,
-  ImageBackground,
-} from 'react-native';
+const Stack = createNativeStackNavigator();
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {TextInputItem} from './src/index';
-
-const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+function App() {
   return (
-    <ImageBackground
-      style={styles.viewBody}
-      source={require('./assets/laptop.jpeg')}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-
-      <View>
-        {/* <Section /> */}
-        <TextInputItem />
-      </View>
-    </ImageBackground>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Screen_A"
+          options={{header: () => null}}
+          component={ScreenA}
+        />
+        <Stack.Screen name="ScreenB" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-};
-const styles = StyleSheet.create({
-  viewBody: {
-    alignItems: 'center',
-    flex: 1,
-  },
-});
+}
+
 export default App;
