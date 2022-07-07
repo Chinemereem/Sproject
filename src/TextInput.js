@@ -11,11 +11,13 @@ import {
   Modal,
   ImageBackground,
 } from 'react-native';
-
+import MixPanel from './Mixpanel';
+import {CustomButton, Header} from './index';
 function TextInputItem() {
   const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+
   const clickHandler = () => {
     if (name.length > 3) {
       setSubmitted(!submitted);
@@ -41,7 +43,9 @@ function TextInputItem() {
   };
   return (
     <View style={styles.viewBody} source={require('../assets/laptop.jpeg')}>
+      <Header />
       <Modal
+        transparent
         visible={showWarning}
         onRequestClose={() => {
           setShowWarning();
@@ -61,6 +65,7 @@ function TextInputItem() {
             <Pressable
               onPress={() => {
                 setShowWarning(false);
+                MixPanel.track('Closed', {Plan: 'Close'});
               }}
               android_ripple={{color: '#fff'}}
               style={styles.warningTextStyle}>
@@ -81,17 +86,10 @@ function TextInputItem() {
         // editable
       />
       <TouchableOpacity>
-        <Pressable
-          // onLongPress={clickHandler}
+        <CustomButton
+          title={submitted ? 'Clear' : 'Submit'}
           onPress={clickHandler}
-          hitSlop={{top: 10, bottom: 10, right: 10, left: 10}}
-          android_ripple={{color: '#00f'}}
-          color="red"
-          style={({pressed}) => [
-            {backgroundColor: pressed ? '#dddddd' : '#00ff00'},
-          ]}>
-          <Text style={styles.textStyle}>{submitted ? 'Clear' : 'Submit'}</Text>
-        </Pressable>
+        />
 
         {submitted ? (
           <View style={styles.body}>
@@ -147,14 +145,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderBottomWidth: 1,
     borderColor: '#000',
-    borderRadius: 20,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
   CenteredModal: {
     flex: 1,

@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {FlatItems, Item, Section, TextInputItem} from './Screen/index';
+import {TextInputItem} from './src/index';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
